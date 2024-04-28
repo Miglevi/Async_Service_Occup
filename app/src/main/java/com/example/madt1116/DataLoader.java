@@ -1,19 +1,19 @@
 package com.example.madt1116;
 
 import android.os.AsyncTask;
-
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 public class DataLoader extends AsyncTask<String, Void, String> {
-
     protected String doInBackground(String... params) {
         try {
-            return DataManager.getRateFromECB(params[0]);
-        } catch (Exception e) {
-            StringWriter sw = new StringWriter();
-            e.printStackTrace(new PrintWriter(sw));
-            return sw.toString();
+            return DataManager.getValuesFromApi(params[0]);
+        } catch (IOException ex) {
+            return String.format("Some error occured => %s", ex.getMessage());
         }
+    }
+    @Override
+    protected void onPostExecute(String result) {
+        super.onPostExecute(result);
     }
 }
